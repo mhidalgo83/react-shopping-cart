@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import data from "./data";
 import { ProductContext } from "./contexts/ProductContext";
@@ -26,6 +26,25 @@ function App() {
     });
     setCart(newCart);
   };
+
+  const saveToLocalStorage = (data) => {
+    localStorage.setItem("cart", JSON.stringify(data));
+  };
+
+  const getLocalStorage = () => {
+    const storage = localStorage.getItem("cart");
+    const storedCart = JSON.parse(storage);
+    console.log(storedCart);
+  };
+
+  //Local storage
+  useEffect(() => {
+    getLocalStorage();
+    console.log("Cart updated");
+    saveToLocalStorage(cart);
+  }, [cart]);
+
+  console.log(window.localStorage.cart);
 
   return (
     <div className="App">
